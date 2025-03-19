@@ -1,18 +1,36 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getAllTickets } from "./services/ticketServices"
+import "./App.css"
 
 export const App = () => {
-  const [count, setCount] = useState(0)
+  const [allTickets, setAllTickets] = useState([])
 
-  const handleBtnClick = () => {
-    setCount(count + 1)
-  }
+  useEffect(() => {
+    getAllTickets().then(ticketsArray => {
+      setAllTickets(ticketsArray)
+      console.log("Tickets Set!")
+    })
+  }, [])
 
   return (
-    <>
-      <button className="btn-secondary" onClick={handleBtnClick}>
-        Click me!
-      </button>
-      <div>Count: {count}</div>
-    </>
+    <div className="tickets-container">
+      <h2>Tickets</h2>
+      <article className="tickets">
+        {allTickets.map(ticket => {
+          return (
+            <section className="ticket" key={ticket.id}>
+              <header className="ticket-info">#{ticket.id}</header>
+              <div>{ticket.description}</div>
+              <footer>
+                <div>
+                  <div className="ticket-info">emergency</div>
+                  <div>{ticket.emergency ? "yes" : "no"}</div>
+                </div>
+              </footer>
+            </section>
+          )
+        })}
+      </article>
+    </div>
   )
 }
