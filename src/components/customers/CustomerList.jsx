@@ -1,33 +1,25 @@
 import { useEffect, useState } from "react"
 import "./Customers.css"
 import { getNonStaffUsers } from "../../services/userService"
+import { User } from "../users/User"
 
 export const CustomerList = () => {
-    const [nonStaffUsers, setNonStaffUsers] = useState([])
+    const [customers, setCustomers] = useState([])
 
-    const getAndSetNonStaffUsers = async () => {
-        const nonStaffUsersData = await getNonStaffUsers()
-        setNonStaffUsers(nonStaffUsersData)
+    const getAndSetCustomers = async () => {
+        const customersData = await getNonStaffUsers()
+        setCustomers(customersData)
     }
 
     useEffect(() => {
-        getAndSetNonStaffUsers()
+        getAndSetCustomers()
     }, [])
 
    return (
     <div className="customers">
-        {nonStaffUsers.map(user => {
+        {customers.map(customer => {
             return (
-                <div>
-                    <div>
-                        <div>Name</div>
-                        <div>{user.fullName}</div>
-                    </div>
-                    <div>
-                        <div>Email</div>
-                        <div>{user.email}</div>
-                    </div>
-                </div>
+                <User user={customer} key={customer.id}/>
             )
         })}
     </div>
