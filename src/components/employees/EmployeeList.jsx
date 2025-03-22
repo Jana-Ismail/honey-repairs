@@ -2,13 +2,14 @@ import { useEffect, useState } from "react"
 import "./Employees.css"
 import { getStaffUsers } from "../../services/userService"
 import { User } from "../users/User"
+import { Link } from "react-router-dom"
 
 export const EmployeeList = () => {
-    const [employees, setEmployees] = useState([])
+    const [employeeUsers, setEmployeeUsers] = useState([])
 
     const getAndSetEmployees = async () => {
         const employeeData = await getStaffUsers()
-        setEmployees(employeeData)
+        setEmployeeUsers(employeeData)
     }
 
     useEffect(() => {
@@ -17,8 +18,10 @@ export const EmployeeList = () => {
 
     return (
         <div className="employees">
-            {employees.map(employee => (
-                <User user={employee} key={employee.id}/>
+            {employeeUsers.map(employeeUser => (
+                <Link to={`/employees/${employeeUser.id}`} key={employeeUser.id}>
+                    <User user={employeeUser} />
+                </Link>
             ))}
         </div>
     )
