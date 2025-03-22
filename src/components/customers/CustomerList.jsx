@@ -2,13 +2,14 @@ import { useEffect, useState } from "react"
 import "./Customers.css"
 import { getNonStaffUsers } from "../../services/userService"
 import { User } from "../users/User"
+import { Link } from "react-router-dom"
 
 export const CustomerList = () => {
-    const [customers, setCustomers] = useState([])
+    const [customerUsers, setCustomerUsers] = useState([])
 
     const getAndSetCustomers = async () => {
-        const customersData = await getNonStaffUsers()
-        setCustomers(customersData)
+        const customerUsersData = await getNonStaffUsers()
+        setCustomerUsers(customerUsersData)
     }
 
     useEffect(() => {
@@ -17,9 +18,11 @@ export const CustomerList = () => {
 
    return (
     <div className="customers">
-        {customers.map(customer => {
+        {customerUsers.map(customerUser => {
             return (
-                <User user={customer} key={customer.id}/>
+                <Link to={`/customers/${customerUser.id}`} key={customerUser.id}>
+                    <User user={customerUser} />
+                </Link>
             )
         })}
     </div>
