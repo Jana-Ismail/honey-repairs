@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import "./Customers.css"
 import { useEffect, useState } from "react"
-import { getUserById } from "../../services/userService"
+import { getCustomerUserByUserId } from "../../services/userService"
 
 export const CustomerDetails = () => {
     const {customerUserId} = useParams()
@@ -15,7 +15,7 @@ export const CustomerDetails = () => {
     })
 
     const getAndSetCustomerUser = async () => {
-        const customerUserData = await getUserById(customerUserId)
+        const customerUserData = await getCustomerUserByUserId(customerUserId)
         setCustomerUser(customerUserData)
     }
 

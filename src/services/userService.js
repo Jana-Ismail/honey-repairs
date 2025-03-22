@@ -8,7 +8,12 @@ export const getStaffUsers = async () => {
     return response.json()
 }
 
-export const getUserById = async (userId) => {
+export const getCustomerUserByUserId = async (userId) => {
     const response = await fetch(`http://localhost:8088/users/${userId}?_embed=customers`)
+    return await response.json()
+}
+
+export const getEmployeeUserByUserId = async (userId) => {
+    const response = await fetch(`http://localhost:8088/users/${userId}?_embed=employees`)
     return await response.json()
 }
