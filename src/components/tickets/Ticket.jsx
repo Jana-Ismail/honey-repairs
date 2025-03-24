@@ -5,7 +5,7 @@ import { closeTicket, createEmployeeTicket } from "../../services/ticketServices
 export const Ticket = ({ ticket, currentUser, setTickets }) => {
     const [employees, setEmployees] = useState([])
     // const [assignedEmployee, setAssignedEmployee] = useState("")
-    const [assignedEmployee, setAssignedEmployee] = useState({})
+    const [assignedEmployee, setAssignedEmployee] = useState("")
 
     // const getAndSetAssignedEmployee = async () => {
     //     if (ticket.employeeTickets.length) {
@@ -22,7 +22,7 @@ export const Ticket = ({ ticket, currentUser, setTickets }) => {
     useEffect(() => {
         // getAndSetAssignedEmployee()
         getAndSetEmployees()
-    }, [])
+    }, [currentUser])
 
     useEffect(() => {
         const foundEmployee = employees.find(employee => employee.id === ticket.employeeTickets[0]?.employeeId)
@@ -32,13 +32,15 @@ export const Ticket = ({ ticket, currentUser, setTickets }) => {
     const handleClaim = async () => {
         const currentEmployee = employees.find(employee => employee.userId === currentUser.id)
 
-        const newEmployeeTicket = {
-            employeeId: currentEmployee.id,
-            serviceTicketId: ticket.id
+        if (currentEmployee) {
+            const newEmployeeTicket = {
+                employeeId: currentEmployee.id,
+                serviceTicketId: ticket.id
+            }
+    
+            await createEmployeeTicket(newEmployeeTicket)
+            await setTickets()
         }
-
-        await createEmployeeTicket(newEmployeeTicket)
-        await setTickets()
 
     }
 
