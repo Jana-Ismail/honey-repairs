@@ -1,21 +1,23 @@
 import { useParams } from "react-router-dom"
-import { getEmployeeUserByUserId } from "../../services/userService"
+import { getEmployeeByUserId } from "../../services/employeeService"
 import { useEffect, useState } from "react"
 
 export const EmployeeDetails = () => {
     const {employeeUserId} = useParams()
-    const [employeeUser, setEmployeeUser] = useState({
-        fullName: "",
-        email: "",
-        employees: [{
-            specialty: "N/A",
-            rate: "N/A"
-        }]
+    const [employee, setEmployee] = useState({
+        specialty: "",
+        rate: null,
+        user: {
+            email: "",
+            fullName: ""
+        },
+        employeeTickets: []
     })
 
     const getAndSetEmployeeUser = async () => {
-        const employeeUserData = await getEmployeeUserByUserId(employeeUserId)
-        setEmployeeUser(employeeUserData)
+        const employeeUserData = await getEmployeeByUserId(employeeUserId)
+        const employeeUserObj = employeeUserData[0]
+        setEmployee(employeeUserObj)
     }
 
     useEffect(() => {
@@ -24,19 +26,22 @@ export const EmployeeDetails = () => {
 
     return (
         <section className="employee">
-            <header className="employee-header">{employeeUser.fullName}</header>
+            <header className="employee-header">{employee.user?.fullName}</header>
             <div>
                 <span className="employee-info">Email: </span>
-                {employeeUser.email}
+                {employee.user?.email}
             </div>
             <div>
                 <span className="employee-info">Specialty: </span>
-                {employeeUser.employees[0] ? `${employeeUser.employees[0].specialty}` : "N/A"}
+                {employee.specialty ? `${employee.specialty}` : "N/A"}
             </div>
             <div>
                 <span className="employee-info">Rate: </span>
-                {employeeUser.employees[0] ? `${employeeUser.employees[0].rate}` : `N/A`}
+                {employee.rate ? `${employee.rate}` : `N/A`}
             </div>
+            <footer className="employee-footer">
+                Currently working on {employee.employeeTickets.length} tickets
+            </footer>
         </section>
     )
 }

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Login.css"
 import { createUser, getUserByEmail } from "../../services/userService"
+import { createEmployee } from "../../services/employeeService"
 
 export const Register = (props) => {
   const [customer, setCustomer] = useState({
@@ -11,7 +12,7 @@ export const Register = (props) => {
   })
   let navigate = useNavigate()
 
-  const registerNewUser = () => {
+  const registerNewUser = async () => {
     createUser(customer).then((createdUser) => {
       if (createdUser.hasOwnProperty("id")) {
         localStorage.setItem(
@@ -21,7 +22,17 @@ export const Register = (props) => {
             staff: createdUser.isStaff,
           })
         )
+        if (createdUser.isStaff) {
+          const newEmployee = {
+            specialty: "",
+            rate: null,
+            userId: createdUser.id
+          }
 
+          createEmployee(newEmployee)
+        }
+      
+      
         navigate("/")
       }
     })
