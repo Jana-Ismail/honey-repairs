@@ -1,6 +1,14 @@
+import { useNavigate } from "react-router-dom"
 import "./Tickets.css"
 
-export const TicketFilterBar = ({ setShowEmergencyOnly, setSearchTerm, currentUser, setShowOpenTicketsOnly }) => {
+export const TicketFilterBar = ({ 
+    setShowEmergencyOnly, 
+    setSearchTerm, 
+    currentUser, 
+    setShowOpenTicketsOnly 
+  }) => {
+    const navigate = useNavigate()
+
     return (
       <div className="filter-bar">
           {currentUser.isStaff ? (
@@ -22,7 +30,10 @@ export const TicketFilterBar = ({ setShowEmergencyOnly, setSearchTerm, currentUs
               </>
             ) : (
               <>
-                <button className="filter-btn btn-primary">Create Ticket</button>
+                <button 
+                  className="filter-btn btn-primary"
+                  onClick={() => {navigate('/tickets/create')}}
+                >Create Ticket</button>
                 <button 
                   className="filter-btn btn-info"
                   onClick={() => {setShowOpenTicketsOnly(true)}}
