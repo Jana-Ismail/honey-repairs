@@ -8,6 +8,8 @@ import { EmployeeDetails } from "../components/employees/EmployeeDetails"
 import { NavBar } from "../components/navbar/NavBar"
 import { useEffect, useState } from "react"
 import { EmployeeForm } from "../components/forms/EmployeeForm"
+import { EmployeeViews } from "./EmployeeViews"
+import { CustomerViews } from "./CustomerViews"
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState({})
@@ -19,29 +21,9 @@ export const ApplicationViews = () => {
     setCurrentUser(honeyUserObject)
   }, [])
 
-  return (
-    <Routes>
-      <Route 
-          path="/" 
-          element={
-            <>
-              <NavBar />
-              <Outlet />
-            </>
-          }
-        >
-          <Route index element={<Welcome />} />
-          <Route path="tickets" element={<TicketList currentUser={currentUser}/>} />
-          <Route path="customers">
-            <Route index element={<CustomerList />} />
-            <Route path=":customerUserId" element={<CustomerDetails />}/>
-          </Route>
-          <Route path="employees">
-            <Route index element={<EmployeeList />} />
-            <Route path=":employeeUserId" element={<EmployeeDetails currentUser={currentUser}/>}/>
-          </Route>
-          <Route path="profile" element={<EmployeeForm currentUser={currentUser} />}/>
-        </Route>
-      </Routes>
+  return currentUser.isStaff ? (
+    <EmployeeViews />
+  ) : (
+    <CustomerViews />
   )
 }
