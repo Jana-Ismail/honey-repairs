@@ -1,5 +1,4 @@
 import { Outlet, Route, Routes } from "react-router-dom"
-import { NavBar } from "../components/navbar/NavBar"
 import { Welcome } from "../components/welcome/welcome"
 import { TicketList } from "../components/tickets/TicketList"
 import { CustomerList } from "../components/customers/CustomerList"
@@ -7,6 +6,7 @@ import { CustomerDetails } from "../components/customers/CustomerDetails"
 import { EmployeeList } from "../components/employees/EmployeeList"
 import { EmployeeDetails } from "../components/employees/EmployeeDetails"
 import { EmployeeForm } from "../components/forms/EmployeeForm"
+import { EmployeeNavBar } from "../components/navbar/EmployeeNavBar"
 
 export const EmployeeViews = ( { currentUser } ) => {
     return(    
@@ -15,7 +15,7 @@ export const EmployeeViews = ( { currentUser } ) => {
                 path="/" 
                 element={
                 <>
-                    <NavBar />
+                    <EmployeeNavBar />
                     <Outlet />
                 </>
                 }
