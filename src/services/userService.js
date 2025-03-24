@@ -4,7 +4,7 @@ export const getNonStaffUsers = async () => {
 }
 
 export const getStaffUsers = async () => {
-    const response = await fetch('http://localhost:8088/users?isStaff=true')
+    const response = await fetch('http://localhost:8088/users?isStaff=true&_embed=employees')
     return response.json()
 }
 

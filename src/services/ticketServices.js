@@ -3,6 +3,11 @@ export const getAllTickets = async () => {
     return await response.json()
 }
 
+export const getEmployeeTickets = async () => {
+    const response = await fetch(`http://localhost:8088/employeeTickets`)
+    return await response.json()
+}
+
 export const createEmployeeTicket = async (employeeTicket) => {
     return await fetch(
         'http://localhost:8088/employeeTickets',
