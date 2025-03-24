@@ -12,15 +12,16 @@ export const TicketList = ({ currentUser }) => {
   
     const getAndSetTickets = async () => {
       const tickets = await getAllTickets()
-      setAllTickets(tickets)
+      if (currentUser.isStaff) {
+        setAllTickets(tickets)
+      } else {
+        const customerTickets = tickets.filter(ticket => ticket.userId === currentUser.id)
+        setAllTickets(customerTickets)
+      }
     }
     useEffect(() => {
-      // getAllTickets().then(ticketsArray => {
-      //   setAllTickets(ticketsArray)
-      //   console.log("Tickets Set!")
-      // })
       getAndSetTickets()
-    }, [])
+    }, [currentUser])
   
     useEffect(() => {
       if (showEmergencyOnly) {
