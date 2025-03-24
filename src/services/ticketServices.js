@@ -33,3 +33,15 @@ export const closeTicket = async (ticket) => {
         }
     )
 }
+
+export const deleteTicket = async (ticketId) => {
+    return fetch(
+        `http://localhost:8088/serviceTickets/${ticketId}`,
+        {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+    )
+}
